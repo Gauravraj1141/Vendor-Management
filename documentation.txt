@@ -1,0 +1,18 @@
+POST http://127.0.0.1:8000/api/vendors/ : Create a new vendor.
+● GET http://127.0.0.1:8000/api/vendors/all: List all vendors.
+● GET http://127.0.0.1:8000/api/vendors/{vendor_id}/:  Retrieve a specific vendor's details.
+● PUT http://127.0.0.1:8000/api/vendors/{vendor_id}/:  Update a vendor's details.
+● DELETE http://127.0.0.1:8000/api/vendors/{vendor_id}/:  Delete a vendor.
+
+
+
+● POST http://127.0.0.1:8000/api/purchase_orders/: Create a purchase order.
+● GET http://127.0.0.1:8000/api/purchase_orders/all: List all purchase orders with an option to filter by
+vendor.
+● GET http://127.0.0.1:8000/api/purchase_orders/{po_id}/: Retrieve details of a specific purchase order.
+● PUT http://127.0.0.1:8000/api/purchase_orders/{po_id}/: Update a purchase order.
+● DELETE http://127.0.0.1:8000/api/purchase_orders/{po_id}/: Delete a purchase order.
+
+
+GET http://127.0.0.1:8000/api/vendors/{vendor_id}/performance:  Retrieve a vendor's performance
+metrics.

@@ -27,10 +27,6 @@ python manage.py runserver
 
 2. Open Postman and import the provided API workspace.
 
-## Postman Collection
-
-A Postman collection is provided to facilitate testing the application's API endpoints. To import the collection, 
-
 
 ## Documentation
 
