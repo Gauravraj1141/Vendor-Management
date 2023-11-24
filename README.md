@@ -25,9 +25,7 @@ pip install -r requirements.txt
 python manage.py runserver
 
 
-2. Open Postman and import the provided API workspace.
-
-
 ## Documentation
 
 For detailed documentation on the application's usage and API endpoints, please refer to the provided documentation file.
+##  documentation.txt
