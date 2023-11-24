@@ -54,10 +54,12 @@ def create_purchase_order_json(request):
         order_details = serializer_save(PurchaseOrderSerializer, order_details).data
         output_payload = order_details
 
-        # create performance details for this vendor
-        performance_detail = dict(zip(["vendor","added_date"],
-                                      [input_json['vendor'],today_date]))
-        performance_detail_create =serializer_save(PerformanceRecordSerializer,performance_detail)
+        # create performance record details for vendor if not exist
+        vendor_record_exist = PerformanceRecord.objects.filter(vendor=input_json['vendor']).exists()
+        if not vendor_record_exist:
+            performance_detail = dict(zip(["vendor","added_date"],
+                                        [input_json['vendor'],today_date]))
+            performance_detail_create =serializer_save(PerformanceRecordSerializer,performance_detail)
 
 
         # get order status name 
@@ -145,6 +147,19 @@ def update_purchase_order_json(request,po_id):
         # get order status name 
         order_status = PurchaseOrderStatus.objects.get(status_id =order_details["order_status_id"] ).status_name
         order_details['order_status_name'] = order_status
+
+        # update vendor performance based on their status 
+        vendor_id = order_details['vendor_id']
+        vendor_po = PurchaseOrder.objects.filter(vendor=vendor_id)
+        vendor_po_serializer = PurchaseOrderSerializer(vendor_po, many=True).data
+        delivery_count_before_date = 0
+        total_po = 0
+        for vendor_data  in vendor_po_serializer:
+            total_po+=1
+            if vendor_data['order_status']==2 :
+                delivery_count_before_date+=1
+        ratings = (delivery_count_before_date/total_po)*100
+        get_on_time_delivery_rating = PerformanceRecord.objects.filter(vendor=vendor_id).update(on_time_delivery_rate=ratings)
 
         output_json = dict(zip(['Status', 'Message',"Payload"],
                                [200, f"order detail updated successfully", order_details]))

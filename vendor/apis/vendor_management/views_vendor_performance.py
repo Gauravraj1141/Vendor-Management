@@ -22,19 +22,19 @@ def calculate_vendor_performance_json(vendor_id):
         # ######################################################
         # Write API Logic here
         # ######################################################
-        vendor_exist = Vendor.objects.filter(vendor_id = vendor_id).exists()
+        vendor_exist = PerformanceRecord.objects.filter(vendor = vendor_id).exists()
         if not vendor_exist:
             output_json = dict(zip(['Status', 'Message',"Payload"],
-                               [404, f"Vendor Not Found", None]))
+                               [404, f"Vendor performance Not Found", None]))
             return output_json
         
         output_payload = {}
-        order_details = PurchaseOrder.objects.filter(vendor=vendor_id)
-        vendor_details_serializer = PurchaseOrderSerializer(order_details, many=True).data
-        output_payload = vendor_details_serializer
+        performance_details = PerformanceRecord.objects.filter(vendor=vendor_id)
+        performance_details_serializer = PerformanceRecordSerializer(performance_details, many=True).data
+        output_payload = performance_details_serializer
 
         output_json = dict(zip(['Status', 'Message',"Payload"],
-                               [200, f"Fetch all the venders details successfully", output_payload]))
+                               [200, f"Fetch the vendor performance successfully", output_payload]))
 
         # ##############################################################################################
         # Write API logic above
